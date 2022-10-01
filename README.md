@@ -6,6 +6,16 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+yarn start
+
+Uris 
+Base: http://localhost:3000/
+Shop: http://localhost:3000/shop
+SignIn: http://localhost:3000/signin
+
+
+####### NPM Users##########################
+
 ### `npm start`
 
 Runs the app in the development mode.\
