@@ -1,7 +1,12 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
-import {getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider} from 'firebase/auth'
-
+import {getAuth, 
+    signInWithRedirect, 
+    signInWithPopup, 
+    signInWithEmailAndPassword,
+    GoogleAuthProvider,
+    createUserWithEmailAndPassword} from 'firebase/auth'
+// there is also a facebookauth provider
 import {getFirestore,
         doc,
         getDoc,
@@ -25,8 +30,12 @@ const firebaseConfig = {
     prompt: "select_account"
   })
 
-  export const auth = getAuth();
+
+  export const auth = getAuth(); // auth is a singleton
   export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+  export const signInWithGoogleRedirect = () => signInWithRedirect(auth, provider);
+  
+
 
 
   // Firestore 
@@ -48,10 +57,10 @@ const firebaseConfig = {
         const createdAt = new Date();
         try {
             setDoc(userDocRef, {
-                'displayName': displayName,
-                'email': email,
-                'accessToken': accessToken,
-                'createAt': createdAt
+                displayName,
+                email,
+                accessToken,
+                createdAt
             })
         }
         catch(error) {
@@ -60,6 +69,17 @@ const firebaseConfig = {
     }
 
     return userDocRef;
+}
 
+  // No need for provider
+  export const createAuthUserWithEmailAndPassword = async(email, password) => {
+    if (!email || !password) return;
 
+    return await createUserWithEmailAndPassword(auth, email, password);
+  }
+
+  export const signInAuthUserWithEmailAndPassword = async(email, password) => {
+    if (!email || !password) return;
+
+    return await signInWithEmailAndPassword(auth, email, password);
   }
